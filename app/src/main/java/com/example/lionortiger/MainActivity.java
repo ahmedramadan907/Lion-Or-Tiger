@@ -62,40 +62,52 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void imageClicked(final View ImageView) {
 
+        counter = true;
         tappedimage = (ImageView) ImageView;
+        for (int i = 0; i <= choice.size(); i++) {
 
+            if(Objects.equals(choice.get(i), "tiger") || Objects.equals(choice.get(i), "lion")){
+                if(Integer.parseInt(tappedimage.getTag().toString()) == i){
 
-
-            if (counter) {
-
-                if (CurrentPlayer == player.ONE) {
-                    tappedimage.setTranslationX(2000);
-                    tappedimage.animate().alpha(1).translationXBy(-2000).rotation(3600).setDuration(2000);
-                    tappedimage.setImageResource(R.drawable.tiger);
-                    CurrentPlayer = player.TWO;
-                    int tag = Integer.parseInt(tappedimage.getTag().toString());
-                    choice.put(tag, "tiger");
-
-                } else if (CurrentPlayer == player.TWO) {
-                    tappedimage.setTranslationX(2000);
-                    tappedimage.animate().alpha(1).translationXBy(-2000).rotation(3600).setDuration(2000);
-                    tappedimage.setImageResource(R.drawable.lion);
-                    CurrentPlayer = player.ONE;
-                    int tag = Integer.parseInt(tappedimage.getTag().toString());
-                    choice.put(tag, "lion");
-
+                    Toast.makeText(MainActivity.this , "You cannot" , Toast.LENGTH_SHORT).show();
+                    counter = false;
+                    break;
                 }
+
+
             }
 
-            CheckWinner();
-
-            tag_num = tappedimage.getId();
-            arrayTapped.add(tag_num);
-            antiConflict.add(Integer.parseInt(tappedimage.getTag().toString()));
         }
-    
 
 
+        if (counter) {
+
+            if (CurrentPlayer == player.ONE) {
+                tappedimage.setTranslationX(2000);
+                tappedimage.animate().alpha(1).translationXBy(-2000).rotation(3600).setDuration(2000);
+                tappedimage.setImageResource(R.drawable.tiger);
+                CurrentPlayer = player.TWO;
+                int tag = Integer.parseInt(tappedimage.getTag().toString());
+                choice.put(tag, "tiger");
+
+            } else if (CurrentPlayer == player.TWO) {
+                tappedimage.setTranslationX(2000);
+                tappedimage.animate().alpha(1).translationXBy(-2000).rotation(3600).setDuration(2000);
+                tappedimage.setImageResource(R.drawable.lion);
+                CurrentPlayer = player.ONE;
+                int tag = Integer.parseInt(tappedimage.getTag().toString());
+                choice.put(tag, "lion");
+
+            }
+        }
+
+
+        CheckWinner();
+
+        tag_num = tappedimage.getId();
+        arrayTapped.add(tag_num);
+        antiConflict.add(Integer.parseInt(tappedimage.getTag().toString()));
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void CheckWinner() {
@@ -152,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i <= arrayTapped.size() - 1; i++) {
 
             img = findViewById(arrayTapped.get(i));
-            Log.i("tag", "Reset: " + arrayTapped.get(i).toString());
 
             img.animate().alpha(0f);
 
@@ -164,7 +175,10 @@ public class MainActivity extends AppCompatActivity {
         counter = true;
         CurrentPlayer = player.ONE;
     }
+
+
 }
+
 
 
 
